@@ -1,4 +1,5 @@
 UNIT_NAME=tuple
+GTEST_DIR=/Users/toyotariku/downloaded_libralies/googletest/googletest
 
 SRC_DIR=./src
 INC_DIR=./include
@@ -6,7 +7,6 @@ TEST_DIR=./test
 LIB_DIR=./lib
 BIN_DIR=./bin
 OBJ_DIR=./obj
-GTEST_DIR=/Users/toyotariku/downloaded_libralies/googletest/googletest
 INCS += -I$(INC_DIR)
 
 UNAME := $(shell uname -s)
