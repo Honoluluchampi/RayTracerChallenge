@@ -1,3 +1,4 @@
+#pragma once
 #include <math.h>
 #include <iostream>
 
@@ -12,6 +13,12 @@ struct tuple
     // 1 indicates point, 0 indicates vector
     unsigned flag;
     tuple(T x_, T y_, T z_, unsigned f_) : x(x_), y(y_), z(z_), flag(f_) {}
+    // the length of the vector
+    T magnitude()
+    {
+        if(flag == 1) throw std::runtime_error("point doesnt have length.");
+        else return std::sqrt(x*x + y*y + z*z);
+    }
 };
 
 // should be inline?
@@ -32,12 +39,18 @@ template <typename T> tuple<T>& operator*= (tuple<T>& lhs, const T& rhs)
 template <typename T> tuple<T>& operator/= (tuple<T>& lhs, const T& rhs)
 { lhs.x /= rhs; lhs.y /= rhs; lhs.z /= rhs; return lhs; }
 
+// for comparision
 template <typename T>
 bool nearlyEqual(T x, T y)
 {
     if(std::abs(x-y) < EPSILON) return true;
     else return false;
 }
+
+template <typename T> bool operator== (const tuple<T>& lhs, const tuple<T>& rhs)
+{ return (nearlyEqual<T>(lhs.x, rhs.x) && nearlyEqual<T>(lhs.y, rhs.y) && nearlyEqual<T>(lhs.z, rhs.z) && lhs.flag == rhs.flag); }
+template <typename T> bool operator!= (const tuple<T>& lhs, const tuple<T>& rhs)
+{ return !(lhs == rhs); }
 
 template <typename T>
 void pointOrVector(const tuple<T>& t)

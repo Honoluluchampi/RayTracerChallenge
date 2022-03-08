@@ -120,3 +120,16 @@ TEST(Tuple, DivOp) {
     EXPECT_TRUE(nearlyEqual<double>(vector.z, 1.15));
     EXPECT_TRUE(vector.flag == 0);
 }
+
+TEST(Tuple, Magnitude) {
+    auto vector = vectorFactory<double>(1, 2, 3);
+    // auto point = pointFactory<double>(1, 2, 1);
+    EXPECT_TRUE(nearlyEqual<double>(vector.magnitude(), std::sqrt(14)));
+    // exception for points
+}
+
+TEST(Tuple, Equality) {
+    auto vector = vectorFactory<double>(1.1, 1.2, 1.3);
+    EXPECT_TRUE(vector == tuple<double>(1.1, 1.2, 1.3, 0));
+    EXPECT_TRUE(vector != tuple<double>(0.2, 1.2, 3.4, 1));
+}
