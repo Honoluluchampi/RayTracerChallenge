@@ -1,5 +1,11 @@
 UNIT_NAME=tuple
+
+UNAME = $(shell uname)
+ifeq ($(UNAME), Linux)
+GTEST_DIR=/home/honolulu/programs/downloaded-libraries/googletest/googletest
+else
 GTEST_DIR=/Users/toyotariku/downloaded_libralies/googletest/googletest
+endif
 
 SRC_DIR=./src
 INC_DIR=./include
