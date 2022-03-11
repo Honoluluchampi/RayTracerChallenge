@@ -1,4 +1,4 @@
-UNIT_NAME=color
+UNIT_NAME=canvas
 
 UNAME = $(shell uname)
 ifeq ($(UNAME), Linux)
