@@ -1,4 +1,4 @@
-UNIT_NAME=tuple
+UNIT_NAME=color
 
 UNAME = $(shell uname)
 ifeq ($(UNAME), Linux)
