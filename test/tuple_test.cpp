@@ -141,3 +141,16 @@ TEST(Tuple, Normalization) {
     vector = vectorFactory<double>(1, 2, 3);
     EXPECT_TRUE(vector.normalize() == vectorFactory<double>(1.0f/sqrt(14), 2.0f/sqrt(14), 3.0f/sqrt(14)));
 }
+
+TEST(Tuple, DotProduct) {
+    auto a = vectorFactory<double>(1, 2, 3);
+    auto b = vectorFactory<double>(2, 3, 4);
+    EXPECT_EQ(dot<double>(a,b), 20);
+}
+
+TEST(Tuple, CrossProduct) {
+    auto a = vectorFactory<double>(1, 2, 3);
+    auto b = vectorFactory<double>(2, 3, 4);
+    EXPECT_TRUE(cross<double>(a,b) == vectorFactory<double>(-1, 2, -1));
+    EXPECT_TRUE(cross<double>(b,a) == vectorFactory<double>(1, -2, 1));
+}
