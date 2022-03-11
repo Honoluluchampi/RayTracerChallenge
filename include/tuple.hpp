@@ -19,6 +19,13 @@ struct tuple
         if(flag == 1) throw std::runtime_error("point doesnt have length.");
         else return std::sqrt(x*x + y*y + z*z);
     }
+    tuple<T> normalize()
+    {
+        // exception for point normalization is thrown in magnitude();
+        T mag = this->magnitude();
+        x /= mag; y /= mag; z /= mag;
+        return *this;
+    }
 };
 
 // should be inline?

@@ -133,3 +133,11 @@ TEST(Tuple, Equality) {
     EXPECT_TRUE(vector == tuple<double>(1.1, 1.2, 1.3, 0));
     EXPECT_TRUE(vector != tuple<double>(0.2, 1.2, 3.4, 1));
 }
+
+TEST(Tuple, Normalization) {
+    using std::sqrt;
+    auto vector = vectorFactory<double>(4, 0, 0);
+    EXPECT_TRUE(vector.normalize() == vectorFactory<double>(1, 0, 0));
+    vector = vectorFactory<double>(1, 2, 3);
+    EXPECT_TRUE(vector.normalize() == vectorFactory<double>(1.0f/sqrt(14), 2.0f/sqrt(14), 3.0f/sqrt(14)));
+}
