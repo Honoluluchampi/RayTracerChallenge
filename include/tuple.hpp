@@ -1,8 +1,7 @@
 #pragma once
+#include <utils.hpp>
 #include <math.h>
 #include <iostream>
-
-constexpr double EPSILON = 0.0001;
 
 namespace renderer {
 
@@ -47,13 +46,6 @@ template <typename T> tuple<T>& operator/= (tuple<T>& lhs, const T& rhs)
 { lhs.x /= rhs; lhs.y /= rhs; lhs.z /= rhs; return lhs; }
 
 // for comparision
-template <typename T>
-bool nearlyEqual(const T& x, const T& y)
-{
-    if(std::abs(x-y) < EPSILON) return true;
-    else return false;
-}
-
 template <typename T> bool operator== (const tuple<T>& lhs, const tuple<T>& rhs)
 { return (nearlyEqual<T>(lhs.x, rhs.x) && nearlyEqual<T>(lhs.y, rhs.y) && nearlyEqual<T>(lhs.z, rhs.z) && lhs.flag == rhs.flag); }
 template <typename T> bool operator!= (const tuple<T>& lhs, const tuple<T>& rhs)
