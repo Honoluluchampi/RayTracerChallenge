@@ -97,4 +97,10 @@ all:
 	make test
 	make run
 
+.PHONY: diff
+diff:
+	make
+	make test
+	make run
+
 -include $(DEPENDS)
