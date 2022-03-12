@@ -1,4 +1,5 @@
 UNIT_NAME=canvas
+LIB_NAME=renderer
 
 UNAME = $(shell uname)
 ifeq ($(UNAME), Linux)
@@ -13,14 +14,16 @@ TEST_DIR=./test
 LIB_DIR=./lib
 BIN_DIR=./bin
 OBJ_DIR=./obj
+TEST_OBJ_DIR=./test_obj
 INCS += -I$(INC_DIR)
 
 UNAME := $(shell uname -s)
 CXX=g++
 CXXFLAGS = -g -Wall
-SRCS    = $(SRC_DIR)/$(UNIT_NAME).cpp
-TARGET = $(LIB_DIR)/lib$(UNIT_NAME).a
+SRCS    = $(wildcard $(SRC_DIR)/*.cpp)
+TARGET = $(LIB_DIR)/lib$(LIB_NAME).a
 OBJS  = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.cpp=.o)))
+DEPENDS = $(OBJS:.o=.d)
 
 default: $(TARGET)
 .PHONY: default
@@ -36,9 +39,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 TEST_SRCS = $(TEST_DIR)/$(UNIT_NAME)_test.cpp
 TEST_TARGET = $(BIN_DIR)/$(UNIT_NAME)_test
-TEST_OBJS  = $(addprefix $(OBJ_DIR)/, $(notdir $(TEST_SRCS:.cpp=.o)))
+TEST_OBJS  = $(addprefix $(TEST_OBJ_DIR)/, $(notdir $(TEST_SRCS:.cpp=.o)))
 LIBS += -L$(LIB_DIR)
-LIBS += -l$(UNIT_NAME)
+LIBS += -l$(LIB_NAME)
 
 CPPFLAGS += -isystem $(GTEST_DIR)/include
 CXXFLAGS = -g -Wall -Wextra -pthread
@@ -70,14 +73,13 @@ $(LIB_DIR)/gtest_main.a : $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
 
 .PHONY: test
 test: $(TEST_TARGET)
-$(TEST_TARGET): $(TARGET) $(TEST_OBJS) $(LIB_DIR)/gtest_main.a
+$(TEST_TARGET): $(OBJS) $(TEST_OBJS) $(LIB_DIR)/gtest_main.a
 		@[ -d $(BIN_DIR) ] || mkdir -p $(BIN_DIR)
-		$(CXX) $(LDFLAGS) -o $@ $(TEST_OBJS) \
-		$(LIBS) $(LIB_DIR)/gtest_main.a -lpthread
+		$(CXX) $(LDFLAGS) -o $@ $(TEST_OBJS) $(LIBS)\
+		$(LIB_DIR)/gtest_main.a -lpthread
 
-
-$(OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp $(GTEST_HEADERS)
-		@[ -d $(OBJ_DIR) ] || mkdir -p $(OBJ_DIR)
+$(TEST_OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp $(GTEST_HEADERS)
+		@[ -d $(TEST_OBJ_DIR) ] || mkdir -p $(TEST_OBJ_DIR)
 		$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCS) -o $@ -c $<
 
 .PHONY: clean
@@ -91,6 +93,8 @@ run:
 .PHONY: all
 all:
 	make clean
-	make 
+	make
 	make test
 	make run
+
+-include $(DEPENDS)
