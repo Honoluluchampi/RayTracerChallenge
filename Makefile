@@ -1,4 +1,4 @@
-UNIT_NAME	=matrix
+UNIT_NAME	=tuple
 LIB_NAME	=renderer
 
 UNAME 		= $(shell uname)
