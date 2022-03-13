@@ -43,3 +43,70 @@ TEST(Matrix, 3x3) {
     EXPECT_EQ(mat(1,1), -2);
     EXPECT_EQ(mat(2,2), 1);
 }
+
+TEST(Matrix, Equality) {
+    Matrix4d A, B, C;
+    A << 1, 2, 3, 4,
+         5, 6, 7, 8,
+         9, 8, 7, 6,
+         5, 4, 3, 2;
+    B << 1, 2, 3, 4,
+         5, 6, 7, 8,
+         9, 8, 7, 6,
+         5, 4, 3, 2;
+    EXPECT_EQ(A, B);
+    C << 2, 3, 4, 5,
+         6, 7, 8, 9,
+         8, 7, 6, 5,
+         4, 3, 2, 1;
+    EXPECT_TRUE(A != C);
+}
+
+TEST(Matrix, Multiplication) {
+    Matrix4d A, B, C;
+    A << 1, 2, 3, 4,
+         5, 6, 7, 8,
+         9, 8, 7, 6,
+         5, 4, 3, 2;
+    B << -2,  1,  2,  3,
+          3,  2,  1, -1,
+          4,  3,  6,  5,
+          1,  2,  7,  8;
+    C <<  20,  22,  50,  48,
+          44,  54, 114, 108,
+          40,  58, 110, 102,
+          16,  26,  46,  42;
+    EXPECT_EQ(A * B, C);
+    Matrix4d D;
+    Vector4d v, ans(18, 24, 33, 1);
+    D << 1, 2, 3, 4,
+         2, 4, 4, 2,
+         8, 6, 4, 1,
+         0, 0, 0, 1;
+    v << 1, 2, 3, 1;
+    EXPECT_EQ(D * v, ans);
+}
+
+TEST(Matrix, Identity) {
+    Matrix4d A, E = Matrix4d::Identity();
+    A << 0, 1, 2, 3,
+         3, 4, 5, 4,
+         9, 8, 4, 7,
+         2, 4, 1, 9;
+    EXPECT_EQ(A * E, A);
+    EXPECT_EQ(E * A, A);
+}
+
+TEST(Matrix, Transpose) {
+    Matrix4d A, B;
+    A << 0, 1, 2, 3,
+         3, 4, 5, 4,
+         9, 8, 4, 7,
+         2, 4, 1, 9;
+    B << 0, 3, 9, 2,
+         1, 4, 8, 4, 
+         2, 5, 4, 1,
+         3, 4, 7, 9;
+    EXPECT_EQ(A.transpose(), B);
+    EXPECT_EQ(Matrix4d::Identity().transpose(), Matrix4d::Identity());
+}

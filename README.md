@@ -1,6 +1,6 @@
 # Ray Tracer Challenge
-I'm implementing Ray Tracer Challenge by Jamis Buck with C++ and Google Test.  
-I wrote Makefile for easy test builds. You can build your test programs like below.
+I'm implementing Ray Tracer Challenge by Jamis Buck with C++, Eigen and Google Test.  
+I wrote Makefile for easy test builds. You can build your test programs like below. (make sure to install Eigen)
 
 *directory structure   
 ---include--(something).hpp ( or .h )  
@@ -13,7 +13,7 @@ UNIT_NAME = (something)
 *the second line of Makefile  
 GTEST_DIR = (path to the google test's directory)  
 
-*execute following make commands
-make  // compile src/(something).cpp
-make test  // compile test/(something)_test.cpp
-make run // execute bin/(something)_test
+*execute following make commands  
+make  // compile src/(something).cpp  
+make test  // compile test/(something)_test.cpp  
+make run // execute bin/(something)_test  
