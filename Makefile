@@ -1,4 +1,4 @@
-UNIT_NAME	=canvas
+UNIT_NAME	=matrix
 LIB_NAME	=renderer
 
 UNAME 		= $(shell uname)
@@ -40,8 +40,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 TEST_SRCS 	=$(TEST_DIR)/$(UNIT_NAME)_test.cpp
 TEST_TARGET =$(BIN_DIR)/$(UNIT_NAME)_test
 TEST_OBJS  	=$(addprefix $(TEST_OBJ_DIR)/, $(notdir $(TEST_SRCS:.cpp=.o)))
+# honolulu renderer
 LIBS 	   +=-L$(LIB_DIR)
 LIBS 	   +=-l$(LIB_NAME)
+# png++
 LIBS	   +=$(shell libpng-config --ldflags)
 
 CPPFLAGS   +=-isystem $(GTEST_DIR)/include

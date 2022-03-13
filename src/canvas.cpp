@@ -49,7 +49,7 @@ void renderer::canvas::saveasPNG(const std::string& filename)
     auto path = "image/" + filename + ".png";
     png::image<png::rgb_pixel> image(width_m, height_m);
     for (png::uint_32 y = 0; y < image.get_height(); ++y) {
-        for(png::uint_32 x = 0; x < image.get_width(); ++x) {
+        for (png::uint_32 x = 0; x < image.get_width(); ++x) {
             const auto& pixel = pixels_m[pos2idx(x,y,width_m)];
             image[y][x] = png::rgb_pixel(pixel.red * MAXIMUM_COLOR_VALUE, pixel.green * MAXIMUM_COLOR_VALUE, pixel.blue * MAXIMUM_COLOR_VALUE);
         }
