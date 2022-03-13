@@ -5,6 +5,7 @@
 #define EIGEN_DONT_PARALLELIZE
 #define EIGEN_MPL2_ONLY
 #include <eigen3/Eigen/Core>
+#include <eigen3/Eigen/LU>
 #include <gtest/gtest.h>
 
 using namespace Eigen;
@@ -109,4 +110,32 @@ TEST(Matrix, Transpose) {
          3, 4, 7, 9;
     EXPECT_EQ(A.transpose(), B);
     EXPECT_EQ(Matrix4d::Identity().transpose(), Matrix4d::Identity());
+}
+
+TEST(Matrix, Eigen) {
+     Matrix4d A, B;
+     A << 6,  4,  4,  4,
+          5,  5,  7,  6,
+          4, -9,  3, -7,
+          9,  1,  7, -6;
+     EXPECT_EQ(A.determinant(), -2120);
+     B << -4,  2, -2, -3,
+           9,  6,  2,  6,
+           0, -5,  1, -5,
+           0,  0,  0,  0;
+     EXPECT_EQ(B.determinant(), 0);
+}
+
+TEST(Matrix, Inverse) {
+     Matrix4d A, B;
+     A << -5,  2,  6, -8,
+           1, -5,  1,  8,
+           7,  7, -6, -7,
+           1, -3,  7,  4;
+     B <<  116,  240,  128,  -24,
+          -430, -775, -236,  277,
+           -42, -119,  -28,  105,
+          -278, -433, -160,  163;
+     B /= 532;
+     EXPECT_EQ(A.inverse(), B);
 }
