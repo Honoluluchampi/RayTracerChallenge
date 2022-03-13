@@ -17,5 +17,5 @@ TEST(Canvas, ReadWrite){
     cvs.writePixel(2,3,color(0.5,0.5,0.5));
     cvs.writePixel(0,0,color(1, 0, 0));
     EXPECT_EQ(cvs.readPixel(2,3), color(0.5,0.5,0.5));
-    cvs.saveasPPM("read_write_test");
+    cvs.saveasPNG("read_write_test");
 }

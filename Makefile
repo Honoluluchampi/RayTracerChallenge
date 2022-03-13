@@ -15,7 +15,7 @@ LIB_DIR		=./lib
 BIN_DIR		=./bin
 OBJ_DIR		=./obj
 TEST_OBJ_DIR=./test_obj
-INCS 	   += -I$(INC_DIR)
+INCS 	   +=-I$(INC_DIR)
 
 UNAME 	   := $(shell uname -s)
 CXX=g++
@@ -40,8 +40,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 TEST_SRCS 	=$(TEST_DIR)/$(UNIT_NAME)_test.cpp
 TEST_TARGET =$(BIN_DIR)/$(UNIT_NAME)_test
 TEST_OBJS  	=$(addprefix $(TEST_OBJ_DIR)/, $(notdir $(TEST_SRCS:.cpp=.o)))
-LIBS 	   += -L$(LIB_DIR)
-LIBS 	   += -l$(LIB_NAME)
+LIBS 	   +=-L$(LIB_DIR)
+LIBS 	   +=-l$(LIB_NAME)
+LIBS	   +=$(shell libpng-config --ldflags)
 
 CPPFLAGS   +=-isystem $(GTEST_DIR)/include
 CXXFLAGS 	=-g -Wall -Wextra -pthread

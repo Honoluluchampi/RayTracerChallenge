@@ -1,6 +1,7 @@
 #include <canvas.hpp>
 #include <utils.hpp>
-#include <iostream>
+// https://www.nongnu.org/pngpp/doc/0.2.9/ (document of png++)
+#include <png++/png.hpp>
 #include <fstream>
 
 // w,h : width and height of the canvas
@@ -30,9 +31,9 @@ void renderer::canvas::saveasPPM(const std::string& filename, const unsigned& ma
     // prevent a ppm file's line from being too long
     unsigned maxPixelsPerLine = 6;
     for (size_t i = 0; i < width_m * height_m; i++) {
-        outputfile << static_cast<unsigned>(pixels_m[i].red * 255) << " ";
-        outputfile << static_cast<unsigned>(pixels_m[i].green * 255) << " ";
-        outputfile << static_cast<unsigned>(pixels_m[i].blue * 255);
+        outputfile << static_cast<unsigned>(pixels_m[i].red * maximumColorValue) << " ";
+        outputfile << static_cast<unsigned>(pixels_m[i].green * maximumColorValue) << " ";
+        outputfile << static_cast<unsigned>(pixels_m[i].blue * maximumColorValue);
         if (++count < maxPixelsPerLine)
             outputfile << " ";
         else {
@@ -41,4 +42,17 @@ void renderer::canvas::saveasPPM(const std::string& filename, const unsigned& ma
         }
     }
     outputfile.close();
+}
+
+void renderer::canvas::saveasPNG(const std::string& filename)
+{
+    auto path = "image/" + filename + ".png";
+    png::image<png::rgb_pixel> image(width_m, height_m);
+    for (png::uint_32 y = 0; y < image.get_height(); ++y) {
+        for(png::uint_32 x = 0; x < image.get_width(); ++x) {
+            const auto& pixel = pixels_m[pos2idx(x,y,width_m)];
+            image[y][x] = png::rgb_pixel(pixel.red * MAXIMUM_COLOR_VALUE, pixel.green * MAXIMUM_COLOR_VALUE, pixel.blue * MAXIMUM_COLOR_VALUE);
+        }
+    }
+    image.write(path);
 }

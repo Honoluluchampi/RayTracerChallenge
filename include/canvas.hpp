@@ -21,6 +21,7 @@ struct canvas
     void writePixel(const size_t x, const size_t y, const color& clr);
     const color& readPixel(const size_t x, const size_t y) const;
     void saveasPPM(const std::string& filename, const unsigned& maximumColorValue = MAXIMUM_COLOR_VALUE) const;
+    void saveasPNG(const std::string& filename);
 private:
     std::vector<color> pixels_m;
 };
