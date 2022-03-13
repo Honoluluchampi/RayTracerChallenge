@@ -1,29 +1,29 @@
-UNIT_NAME=canvas
-LIB_NAME=renderer
+UNIT_NAME	=canvas
+LIB_NAME	=renderer
 
-UNAME = $(shell uname)
+UNAME 		= $(shell uname)
 ifeq ($(UNAME), Linux)
-GTEST_DIR=/home/honolulu/programs/downloaded-libraries/googletest/googletest
+GTEST_DIR	=/home/honolulu/programs/downloaded-libraries/googletest/googletest
 else
-GTEST_DIR=/Users/toyotariku/downloaded_libralies/googletest/googletest
+GTEST_DIR	=/Users/toyotariku/downloaded_libralies/googletest/googletest
 endif
 
-SRC_DIR=./src
-INC_DIR=./include
-TEST_DIR=./test
-LIB_DIR=./lib
-BIN_DIR=./bin
-OBJ_DIR=./obj
+SRC_DIR		=./src
+INC_DIR		=./include
+TEST_DIR	=./test
+LIB_DIR		=./lib
+BIN_DIR		=./bin
+OBJ_DIR		=./obj
 TEST_OBJ_DIR=./test_obj
-INCS += -I$(INC_DIR)
+INCS 	   += -I$(INC_DIR)
 
-UNAME := $(shell uname -s)
+UNAME 	   := $(shell uname -s)
 CXX=g++
-CXXFLAGS = -g -Wall
-SRCS    = $(wildcard $(SRC_DIR)/*.cpp)
-TARGET = $(LIB_DIR)/lib$(LIB_NAME).a
-OBJS  = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.cpp=.o)))
-DEPENDS = $(OBJS:.o=.d)
+CXXFLAGS 	=-g -Wall
+SRCS    	=$(wildcard $(SRC_DIR)/*.cpp)
+TARGET 		=$(LIB_DIR)/lib$(LIB_NAME).a
+OBJS  		=$(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.cpp=.o)))
+DEPENDS 	=$(OBJS:.o=.d)
 
 default: $(TARGET)
 .PHONY: default
@@ -37,26 +37,20 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 		$(CXX) $(CXXFLAGS) $(INCS) -o $@ -c $<
 
 
-TEST_SRCS = $(TEST_DIR)/$(UNIT_NAME)_test.cpp
-TEST_TARGET = $(BIN_DIR)/$(UNIT_NAME)_test
-TEST_OBJS  = $(addprefix $(TEST_OBJ_DIR)/, $(notdir $(TEST_SRCS:.cpp=.o)))
-LIBS += -L$(LIB_DIR)
-LIBS += -l$(LIB_NAME)
+TEST_SRCS 	=$(TEST_DIR)/$(UNIT_NAME)_test.cpp
+TEST_TARGET =$(BIN_DIR)/$(UNIT_NAME)_test
+TEST_OBJS  	=$(addprefix $(TEST_OBJ_DIR)/, $(notdir $(TEST_SRCS:.cpp=.o)))
+LIBS 	   += -L$(LIB_DIR)
+LIBS 	   += -l$(LIB_NAME)
 
-CPPFLAGS += -isystem $(GTEST_DIR)/include
-CXXFLAGS = -g -Wall -Wextra -pthread
+CPPFLAGS   +=-isystem $(GTEST_DIR)/include
+CXXFLAGS 	=-g -Wall -Wextra -pthread
 
-# All Google Test headers.  Usually you shouldn't change this
-# definition.
-GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
-                $(GTEST_DIR)/include/gtest/internal/*.h
-GTEST_SRCS_ = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
+# All Google Test headers
+GTEST_HEADERS 	= $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
+GTEST_SRCS_ 	= $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
-# For simplicity and to avoid depending on Google Test's
-# implementation details, the dependencies specified below are
-# conservative and not optimized.  This is fine as Google Test
-# compiles fast and for ordinary users its source rarely changes.
-
+# build google test
 $(OBJ_DIR)/gtest-all.o : $(GTEST_SRCS_)
 		$(CXX) $(CPPFLAGS) -I$(GTEST_DIR) $(CXXFLAGS) -c \
                     -o $@ $(GTEST_DIR)/src/gtest-all.cc

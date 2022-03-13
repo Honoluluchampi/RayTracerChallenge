@@ -11,3 +11,9 @@ TEST(Canvas, CanvasConstruction){
         for(size_t y = 0; y < 20; y++)
             EXPECT_TRUE(cvs.readPixel(x, y) == color(0,0,0));
 }
+
+TEST(Canvas, ReadWrite){
+    auto cvs = canvas(10, 20);
+    cvs.writePixel(2,3,color(0.5,0.5,0.5));
+    EXPECT_EQ(cvs.readPixel(2,3), color(0.5,0.5,0.5));
+}
