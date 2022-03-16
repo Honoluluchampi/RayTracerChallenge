@@ -1,4 +1,4 @@
-UNIT_NAME	=matrix
+UNIT_NAME	=transformation
 LIB_NAME	=renderer
 
 UNAME 		= $(shell uname)
@@ -18,7 +18,7 @@ TEST_OBJ_DIR=./test_obj
 INCS 	   +=-I$(INC_DIR)
 
 UNAME 	   := $(shell uname -s)
-CXX=g++
+CXX			=g++
 CXXFLAGS 	=-g -Wall
 SRCS    	=$(wildcard $(SRC_DIR)/*.cpp)
 TARGET 		=$(LIB_DIR)/lib$(LIB_NAME).a
