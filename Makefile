@@ -16,8 +16,9 @@ BIN_DIR		=./bin
 OBJ_DIR		=./obj
 TEST_OBJ_DIR=./test_obj
 INCS 	   +=-I$(INC_DIR)
+INC_FILES	=$(wildcard $(INC_DIR)/*.hpp)
 
-UNAME 	   := $(shell uname -s)
+UNAME 	   :=$(shell uname -s)
 CXX			=g++
 CXXFLAGS 	=-g -Wall
 SRCS    	=$(wildcard $(SRC_DIR)/*.cpp)
@@ -28,7 +29,7 @@ DEPENDS 	=$(OBJS:.o=.d)
 default: $(TARGET)
 .PHONY: default
 
-$(TARGET): $(OBJS)
+$(TARGET): $(OBJS) $(INC_FILES)
 		@[ -d $(LIB_DIR) ] || mkdir -p $(LIB_DIR)
 		$(AR) rcs $(TARGET) $(OBJS)
 
@@ -70,7 +71,7 @@ $(LIB_DIR)/gtest_main.a : $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
 
 .PHONY: test
 test: $(TEST_TARGET)
-$(TEST_TARGET): $(OBJS) $(TEST_OBJS) $(LIB_DIR)/gtest_main.a
+$(TEST_TARGET): $(OBJS) $(TEST_OBJS) $(INC_FILES) $(LIB_DIR)/gtest_main.a
 		@[ -d $(BIN_DIR) ] || mkdir -p $(BIN_DIR)
 		$(CXX) $(LDFLAGS) -o $@ $(TEST_OBJS) $(LIBS)\
 		$(LIB_DIR)/gtest_main.a -lpthread
