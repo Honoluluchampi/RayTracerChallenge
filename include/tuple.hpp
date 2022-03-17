@@ -40,7 +40,7 @@
             // can be parallelized?
             return tuple(a[1]*b[2] - a[2]*b[1], a[2]*b[0] - a[0]*b[2], a[0]*b[1] - a[1]*b[0], 0);
         }
-        bool operator== (const tuple& lhs, const tuple& rhs)
+        inline bool operator== (const tuple& lhs, const tuple& rhs)
         { return nearlyEqual(lhs[0], rhs[0]), nearlyEqual(lhs[1], rhs[1]), nearlyEqual(lhs[2], rhs[2]), nearlyEqual(lhs[3], rhs[3]); }
     } // namespace renderer
 

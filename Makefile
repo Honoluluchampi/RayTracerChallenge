@@ -1,4 +1,4 @@
-UNIT_NAME	=transformation
+UNIT_NAME	=ray
 LIB_NAME	=renderer
 PIT_NAME	=chap4
 

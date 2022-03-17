@@ -11,3 +11,5 @@
 #include <color.hpp>
 #include <tuple.hpp>
 #include <transformation.hpp>
+#include <ray.hpp>
+#include <primitive.hpp>

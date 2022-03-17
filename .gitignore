@@ -1,4 +1,4 @@
-/lib/*
+*.a
 /bin/*
 /.vscode/*
 /image/*
