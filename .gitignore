@@ -1,7 +1,6 @@
 /lib/*
-/obj/*
 /bin/*
 /.vscode/*
-/test_obj/*
 /image/*
 /replaced/*
+*.o

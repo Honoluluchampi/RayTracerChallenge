@@ -1,5 +1,6 @@
 UNIT_NAME	=transformation
 LIB_NAME	=renderer
+PIT_NAME	=chap4
 
 UNAME 		= $(shell uname)
 ifeq ($(UNAME), Linux)
@@ -101,4 +102,22 @@ diff:
 	make test
 	make run
 
+
+# putting it together
+PIT_DIR 	=./putting_it_together
+PIT_TARGET	=$(BIN_DIR)/$(PIT_NAME)
+PIT_OBJ		=./pit_obj/$(PIT_NAME).o
+
+.PHONY: pit
+pit: $(PIT_TARGET)
+$(PIT_TARGET): $(OBJS) $(PIT_OBJ) $(INC_FILES) $(PIT_DIR)/$(PIT_NAME).cpp
+		@[ -d $(BIN_DIR) ] || mkdir -p $(BIN_DIR)
+		$(CXX) $(LDFLAGS) -o $@ $(PIT_OBJ) $(LIBS)
+$(PIT_OBJ): $(PIT_DIR)/$(PIT_NAME).cpp $(SRCS)
+		$(CXX) $(CXXFLAGS) $(INCS) -o $@ -c $<
+
+.PHONY: pitall
+pitall: 
+	make pit
+	$(PIT_TARGET)
 -include $(DEPENDS)
