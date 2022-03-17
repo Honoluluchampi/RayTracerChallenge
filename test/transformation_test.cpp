@@ -50,3 +50,13 @@ TEST(Transformation, Shearing) {
     EXPECT_TRUE(shear5 * point == pointFactory(2, 3, 6));    
     EXPECT_TRUE(shear6 * point == pointFactory(2, 3, 7));    
 }
+
+TEST(Transformation, Chaining) {
+    auto point = pointFactory(1, 0, 1);
+    // pipeline
+    glm::mat4 A = glm::mat4(1) 
+        | rotate(M_PI_2f32, 1, 0, 0)
+        | scale(5, 5, 5)
+        | translate(10, 5, 7);
+    EXPECT_TRUE(A * point == pointFactory(15, 0, 7));
+}
