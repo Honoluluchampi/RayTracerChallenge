@@ -20,10 +20,32 @@ TEST(Ray, Proceed) {
 }
 
 TEST(Ray, Intersection) {
+    // intersect with two points
     ray r(pointFactory(0, 0, -5), vectorFactory(0, 0, 1));
     sphere s(pointFactory(0, 0, 0), 1.0f);
     auto info = intersect(r, s);
     EXPECT_EQ(info.count, 2);
     EXPECT_FLOAT_EQ(info.tList[0], 6.0f);
     EXPECT_FLOAT_EQ(info.tList[1], 4.0f);
+    r = ray(pointFactory(0, 0, 5), vectorFactory(0, 0, 1));
+    info = intersect(r, s);
+    EXPECT_EQ(info.count, 2);
+    EXPECT_FLOAT_EQ(info.tList[0], -4.0f);
+    EXPECT_FLOAT_EQ(info.tList[1], -6.0f);
+    // intersect with one point (return two points)
+    r = ray(pointFactory(0, 1, -5), vectorFactory(0, 0, 1));
+    info = intersect(r, s);
+    EXPECT_EQ(info.count, 2);
+    EXPECT_FLOAT_EQ(info.tList[0], 5.0f);
+    EXPECT_FLOAT_EQ(info.tList[1], 5.0f);
+    // no intersection
+    r = ray(pointFactory(0, 2, -5), vectorFactory(0, 0, 1));
+    info = intersect(r, s);
+    EXPECT_EQ(info.count, 0);
+    // begin from the inside of sphere
+    r = ray(pointFactory(0, 0, 0), vectorFactory(0, 0, 1));
+    info = intersect(r, s);
+    EXPECT_EQ(info.count, 2);
+    EXPECT_FLOAT_EQ(info.tList[0], 1.0f);
+    EXPECT_FLOAT_EQ(info.tList[1], -1.0f);
 }

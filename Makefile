@@ -16,7 +16,7 @@ LIB_DIR		=./lib
 BIN_DIR		=./bin
 OBJ_DIR		=./obj
 TEST_OBJ_DIR=./test_obj
-INCS 	   +=-I$(INC_DIR)
+INCS 	   +=-I$(INC_DIR) -I/usr/local/include
 INC_FILES	=$(wildcard $(INC_DIR)/*.hpp)
 
 UNAME 	   :=$(shell uname -s)
@@ -114,6 +114,7 @@ $(PIT_TARGET): $(OBJS) $(PIT_OBJ) $(INC_FILES) $(PIT_DIR)/$(PIT_NAME).cpp
 		@[ -d $(BIN_DIR) ] || mkdir -p $(BIN_DIR)
 		$(CXX) $(LDFLAGS) -o $@ $(PIT_OBJ) $(LIBS)
 $(PIT_OBJ): $(PIT_DIR)/$(PIT_NAME).cpp $(SRCS)
+		@[ -d ./pit_obj ] || mkdir -p pit_obj
 		$(CXX) $(CXXFLAGS) $(INCS) -o $@ -c $<
 
 .PHONY: pitall

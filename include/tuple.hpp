@@ -30,6 +30,7 @@
     namespace renderer
     {
         using tuple = glm::vec4;
+        
         inline tuple pointFactory(const float& x, const float& y, const float& z)
         { return tuple(x, y, z, 1); }
         inline tuple vectorFactory(const float& x, const float& y, const float& z)
