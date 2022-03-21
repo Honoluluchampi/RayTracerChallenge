@@ -14,6 +14,7 @@ void drawCircle()
 {
     // at the origin , radius = 1.0
     sphere sph{};
+    sph.setTransform(glm::scale(glm::vec3(1, 0.5, 1)));
     canvas cvs(CANVAS_PIXELS, CANVAS_PIXELS);
 
     for (size_t y = 0; y < CANVAS_PIXELS; y++) {
@@ -22,7 +23,7 @@ void drawCircle()
         for (size_t x = 0; x < CANVAS_PIXELS; x++) {
             auto worldX = -WALL_SIZE / 2 + PIXEL_SIZE * x;
             auto position = pointFactory(worldX, worldY, WALL_Z);
-
+            // ray from the light to the pixel
             ray r(RAY_ORIGIN, glm::normalize(position - RAY_ORIGIN));
             r.calcIntersect(sph);
             if(r.hit()) cvs.writePixel(x, y, c);
