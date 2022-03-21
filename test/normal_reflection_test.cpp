@@ -26,8 +26,16 @@ TEST(NormalnReflection, Normal) {
     sph.setTransform(std::move(mat));
     n = sph.normalAt(pointFactory(0, std::sqrt(2)/2.0f, -std::sqrt(2)/2.0f));
     // numerical error
-    EXPECT_EQ(n, vectorFactory(1.0222112e-8, 0.97014254, -0.24253562));
-    // EXPECT_FLOAT_EQ(n[1], 0.97014);
-    // EXPECT_FLOAT_EQ(n[2], -0.24254);
-    // EXPECT_EQ(n[3], 0);
+    EXPECT_TRUE(n == vectorFactory(1.0222112e-8, 0.97014254, -0.24253562));
+}
+
+TEST(NormalnReflection, Reflection) {
+    auto v = vectorFactory(1, -1, 0);
+    auto n = vectorFactory(0, 1, 0);
+    EXPECT_EQ(reflect(v, n), vectorFactory(1, 1, 0));
+    v = vectorFactory(0, -1, 0);
+    n = vectorFactory(std::sqrt(2)/2.0f, std::sqrt(2)/2.0f, 0);
+    auto r = reflect(v, n);
+    // numerical error
+    EXPECT_TRUE(r == vectorFactory(1, -5.9604645e-8, 0));
 }
