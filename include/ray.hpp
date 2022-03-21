@@ -5,14 +5,23 @@
 #include <primitive.hpp>
 #include <vector>
 #include <optional>
+#include <limits>
+#include <memory>
+#include <boost/intrusive_ptr.hpp>
 
 namespace renderer {
+
+constexpr float INF = std::numeric_limits<float>::max();
+static sphere DUMMY_PRMT = sphere(pointFactory(0,0,0), 0);
 
 struct intersect
 {
     float t;
-    const primitive& prmt;
-    intersect(const float t_, const primitive& prmt_) : t(t_), prmt(prmt_) {}
+    // pointer for a primitive
+    // boost::intrusive_ptr<primitive> pPrmt;
+    primitive* pPrmt; // should be safer...
+    intersect(const float t_, primitive& prmt_) : t(t_), pPrmt(&prmt_) {}
+    intersect(const float t_, primitive&& prmt_) : t(t_), pPrmt(&prmt_) {}
 };
 
 struct ray
@@ -20,20 +29,27 @@ struct ray
     tuple origin, direction;
     // intersectiong object list;
     std::vector<intersect> itscList;
+
     ray(const tuple& ori, const tuple& dir) : origin(ori), direction(dir) {}
+    ray(const ray& r) = default;
+
     // returns r.origin + r.direction * t
     inline tuple proceed(const float& t)
     { return origin + direction * t; }
-    // check weather this ray intersects with a given inst
-    inline bool checkHit(const intersect& inst)
-    { return (inst.t >= 0 && hittingItsc->t > inst.t); }
+    // check weather this ray hits a given inst
+    bool checkHit(const intersect& inst);
+    // adding intersection
+    bool add(const intersect& itsc);
+
     // get hitting object and its t
-    inline intersect hit() const
+    inline const intersect& hit() const
     { return hittingItsc.value(); }
+    inline size_t itscCount()
+    { return itscList.size(); }
     // calc intersecting points with a sphere
-    void calcIntersect(const ray& r, const sphere& sph); 
+    void calcIntersect(sphere& sph); 
 private:
-    // initialize as an invalid intersect
+    // initialized as an invalid intersect
     std::optional<intersect> hittingItsc = std::nullopt;
 };
 

@@ -9,6 +9,8 @@ else
 GTEST_DIR	=/Users/toyotariku/downloaded_libralies/googletest/googletest
 endif
 
+BOOST_DIR 	=/home/honolulu/programs/downloaded-libraries/boost_1_78_0
+
 SRC_DIR		=./src
 INC_DIR		=./include
 TEST_DIR	=./test
@@ -16,11 +18,11 @@ LIB_DIR		=./lib
 BIN_DIR		=./bin
 OBJ_DIR		=./obj
 TEST_OBJ_DIR=./test_obj
-INCS 	   +=-I$(INC_DIR) -I/usr/local/include
+INCS 	   +=-I$(INC_DIR) -I/usr/local/include -I$(BOOST_DIR)
 INC_FILES	=$(wildcard $(INC_DIR)/*.hpp)
 
 UNAME 	   :=$(shell uname -s)
-CXX			=g++
+CXX			=g++-11 -std=c++20
 CXXFLAGS 	=-g -Wall
 SRCS    	=$(wildcard $(SRC_DIR)/*.cpp)
 TARGET 		=$(LIB_DIR)/lib$(LIB_NAME).a
