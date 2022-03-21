@@ -27,7 +27,7 @@ bool ray::addItsc(const intersect& itsc)
 void ray::calcIntersect(sphere& sph)
 {
     // get the inverse of the sph transform, and make new object-space ray 
-    auto r = this->transform(glm::inverse(sph.transform));
+    auto r = this->transform(sph.getInverse());
 
     // discreminant
     auto sphere_to_ray = r.origin - sph.origin;

@@ -3,7 +3,7 @@
 #include <glm_inc.hpp>
 #include <iostream>
 
-constexpr double EPSILON = 0.00001;
+constexpr double EPSILON = 0.0001;
 
 template <typename T>
 inline bool nearlyEqual(const T& x, const T& y)

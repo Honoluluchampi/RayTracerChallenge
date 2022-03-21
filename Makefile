@@ -1,4 +1,4 @@
-UNIT_NAME	=ray
+UNIT_NAME	=normal_reflection
 LIB_NAME	=renderer
 PIT_NAME	=chap5
 
@@ -22,7 +22,7 @@ INCS 	   +=-I$(INC_DIR) -I/usr/local/include -I$(BOOST_DIR)
 INC_FILES	=$(wildcard $(INC_DIR)/*.hpp)
 
 UNAME 	   :=$(shell uname -s)
-CXX			=g++-11 -std=c++20
+CXX			=g++-10 -std=c++20
 CXXFLAGS 	=-g -Wall
 SRCS    	=$(wildcard $(SRC_DIR)/*.cpp)
 TARGET 		=$(LIB_DIR)/lib$(LIB_NAME).a

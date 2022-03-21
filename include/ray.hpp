@@ -11,8 +11,8 @@
 
 namespace renderer {
 
-constexpr float INF = std::numeric_limits<float>::max();
-static sphere DUMMY_PRMT = sphere(pointFactory(0,0,0), 0);
+struct primitive;
+struct sphere;
 
 struct intersect
 {
