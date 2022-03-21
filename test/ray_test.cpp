@@ -27,25 +27,31 @@ TEST(Ray, Intersection) {
     EXPECT_EQ(r.itscCount(), 2);
     EXPECT_FLOAT_EQ(r.itscList[0].t, 4.0f);
     EXPECT_FLOAT_EQ(r.itscList[1].t, 6.0f);
+    EXPECT_FLOAT_EQ(r.hit().value().t, 4.0f);
+    // no hitting itsc
     r = ray(pointFactory(0, 0, 5), vectorFactory(0, 0, 1));
     r.calcIntersect(s);
     EXPECT_EQ(r.itscCount(), 2);
     EXPECT_FLOAT_EQ(r.itscList[0].t, -6.0f);
     EXPECT_FLOAT_EQ(r.itscList[1].t, -4.0f);
+    EXPECT_FALSE(r.hit());
     // intersect with one point (return two points)
     r = ray(pointFactory(0, 1, -5), vectorFactory(0, 0, 1));
     r.calcIntersect(s);
     EXPECT_EQ(r.itscCount(), 2);
     EXPECT_FLOAT_EQ(r.itscList[0].t, 5.0f);
     EXPECT_FLOAT_EQ(r.itscList[1].t, 5.0f);
+    EXPECT_FLOAT_EQ(r.hit().value().t, 5.0f);
     // no intersection
     r = ray(pointFactory(0, 2, -5), vectorFactory(0, 0, 1));
     r.calcIntersect(s);
     EXPECT_EQ(r.itscCount(), 0);
+    EXPECT_FALSE(r.hit());
     // begin from the inside of sphere
     r = ray(pointFactory(0, 0, 0), vectorFactory(0, 0, 1));
     r.calcIntersect(s);
     EXPECT_EQ(r.itscCount(), 2);
     EXPECT_FLOAT_EQ(r.itscList[0].t, -1.0f);
     EXPECT_FLOAT_EQ(r.itscList[1].t, 1.0f);
+    EXPECT_FLOAT_EQ(r.hit().value().t, 1.0f);
 }

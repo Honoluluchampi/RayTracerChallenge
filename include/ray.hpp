@@ -42,8 +42,8 @@ struct ray
     bool add(const intersect& itsc);
 
     // get hitting object and its t
-    inline const intersect& hit() const
-    { return hittingItsc.value(); }
+    inline const std::optional<intersect>& hit() const
+    { return hittingItsc; }
     inline size_t itscCount()
     { return itscList.size(); }
     // calc intersecting points with a sphere
