@@ -30,6 +30,7 @@ struct ray
     // intersectiong object list;
     std::vector<intersect> itscList;
 
+    ray() {}
     ray(const tuple& ori, const tuple& dir) : origin(ori), direction(dir) {}
     ray(const ray& r) = default;
 
@@ -39,15 +40,21 @@ struct ray
     // check weather this ray hits a given inst
     bool checkHit(const intersect& inst);
     // adding intersection
-    bool add(const intersect& itsc);
+    bool addItsc(const intersect& itsc);
 
+    // getter
     // get hitting object and its t
     inline const std::optional<intersect>& hit() const
     { return hittingItsc; }
     inline size_t itscCount()
     { return itscList.size(); }
+
     // calc intersecting points with a sphere
     void calcIntersect(sphere& sph); 
+
+    // transform
+    ray transform(const glm::mat4& mat)
+    { return {mat * this->origin, mat * this->direction}; } 
 private:
     // initialized as an invalid intersect
     std::optional<intersect> hittingItsc = std::nullopt;

@@ -2,6 +2,8 @@
 
 #include <tuple.hpp>
 #include <ray.hpp>
+#include <functional>
+#include <glm_inc.hpp>
 
 namespace renderer {
 
@@ -18,6 +20,9 @@ struct primitive
     primitive(pType t) : type(t), refCount(0) {}
     ~primitive() {}
 
+    // transform func
+    std::function<glm::mat4(glm::mat4&)> transform;
+    
 private:
     // for intrusive pointer
     int refCount;
@@ -34,8 +39,13 @@ struct sphere : public primitive
 {
     tuple origin;
     float radius;
-    sphere(const tuple& ori, const float& radi) : 
+    glm::mat4 transform = glm::mat4(1); 
+    sphere(const tuple& ori = pointFactory(0, 0, 0), const float& radi = 1) : 
         primitive(pType::SPHERE), origin(ori), radius(radi) {}
+    
+    // for object space transform
+    inline void setTransform(const glm::mat4& mat) { transform = mat; }
+    inline void setTransform(glm::mat4&& mat) { transform = std::move(mat); }
 };
 
 }// namespace renderer

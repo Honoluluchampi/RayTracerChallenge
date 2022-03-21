@@ -55,3 +55,28 @@ TEST(Ray, Intersection) {
     EXPECT_FLOAT_EQ(r.itscList[1].t, 1.0f);
     EXPECT_FLOAT_EQ(r.hit().value().t, 1.0f);
 }
+
+TEST(Ray, Tranfrom) {
+    // translation
+    ray r {pointFactory(1, 2, 3), vectorFactory(0, 1, 0)};
+    glm::mat4 a = glm::translate(glm::vec3(3, 4, 5));
+    auto r2 = r.transform(a);
+    EXPECT_EQ(r2.origin, pointFactory(4, 6, 8));
+    EXPECT_EQ(r2.direction, vectorFactory(0, 1, 0));
+    // scaling
+    a = glm::scale(glm::vec3(2, 3, 4));
+    r2 = r.transform(a);
+    EXPECT_EQ(r2.origin, pointFactory(2, 6, 12));
+    EXPECT_EQ(r2.direction, vectorFactory(0, 3, 0));
+}    
+
+TEST(Ray, appliedTransform) {
+    // sphere transform
+    ray r(pointFactory(0, 0, -5), vectorFactory(0, 0, 1));
+    sphere s;
+    s.setTransform(glm::scale(glm::vec3(2, 2, 2)));
+    r.calcIntersect(s);
+    EXPECT_EQ(r.itscCount(), 2);
+    EXPECT_FLOAT_EQ(r.hit().value().t, 3.0f);
+    EXPECT_FLOAT_EQ(r.itscList[1].t, 7.0f);
+}
