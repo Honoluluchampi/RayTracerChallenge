@@ -79,4 +79,9 @@ TEST(Ray, appliedTransform) {
     EXPECT_EQ(r.itscCount(), 2);
     EXPECT_FLOAT_EQ(r.hit().value().t, 3.0f);
     EXPECT_FLOAT_EQ(r.itscList[1].t, 7.0f);
+
+    r = ray(pointFactory(0, 0, -5), vectorFactory(0, 0, 1));
+    s.setTransform(glm::translate(glm::vec3(5, 0, 0)));
+    r.calcIntersect(s);
+    EXPECT_EQ(r.itscCount(), 0);
 }

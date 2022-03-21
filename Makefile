@@ -1,6 +1,6 @@
 UNIT_NAME	=ray
 LIB_NAME	=renderer
-PIT_NAME	=chap4
+PIT_NAME	=chap5
 
 UNAME 		= $(shell uname)
 ifeq ($(UNAME), Linux)
@@ -115,12 +115,13 @@ pit: $(PIT_TARGET)
 $(PIT_TARGET): $(OBJS) $(PIT_OBJ) $(INC_FILES) $(PIT_DIR)/$(PIT_NAME).cpp
 		@[ -d $(BIN_DIR) ] || mkdir -p $(BIN_DIR)
 		$(CXX) $(LDFLAGS) -o $@ $(PIT_OBJ) $(LIBS)
-$(PIT_OBJ): $(PIT_DIR)/$(PIT_NAME).cpp $(SRCS)
+$(PIT_OBJ): $(PIT_DIR)/$(PIT_NAME).cpp 
 		@[ -d ./pit_obj ] || mkdir -p pit_obj
 		$(CXX) $(CXXFLAGS) $(INCS) -o $@ -c $<
 
 .PHONY: pitall
 pitall: 
+	rm -f $(PIT_TARGET) $(PIT_OBJ)
 	make pit
 	$(PIT_TARGET)
 -include $(DEPENDS)
