@@ -1,6 +1,6 @@
 UNIT_NAME	=shading_components
 LIB_NAME	=renderer
-PIT_NAME	=chap5
+PIT_NAME	=chap6
 
 UNAME 		= $(shell uname)
 ifeq ($(UNAME), Linux)
@@ -18,6 +18,7 @@ LIB_DIR		=./lib
 BIN_DIR		=./bin
 OBJ_DIR		=./obj
 TEST_OBJ_DIR=./test_obj
+IMG_DIR		=./image
 INCS 	   +=-I$(INC_DIR) -I/usr/local/include -I$(BOOST_DIR)
 INC_FILES	=$(wildcard $(INC_DIR)/*.hpp)
 
@@ -123,5 +124,6 @@ $(PIT_OBJ): $(PIT_DIR)/$(PIT_NAME).cpp
 pitall: 
 	rm -f $(PIT_TARGET) $(PIT_OBJ)
 	make pit
+	@[ -d $(IMG_DIR) ] || mkdir -p $(IMG_DIR)
 	$(PIT_TARGET)
 -include $(DEPENDS)

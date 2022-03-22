@@ -8,10 +8,11 @@ namespace renderer{
 // point light
 struct pointLight
 {
-    color intensity_m;
     tuple position_m;
-    pointLight(const tuple& pos, const color& itst = color(1,1,1)) : intensity_m(itst), position_m(pos) {}
-
+    color intensity_m;
+    
+    pointLight(const tuple& pos, const color& itst = color(1,1,1)) : position_m(pos), intensity_m(itst) {}
+    pointLight(tuple&& pos, color&& itst = color(1,1,1)) : position_m(std::move(pos)), intensity_m(std::move(itst)) {}
 };
 
 struct material

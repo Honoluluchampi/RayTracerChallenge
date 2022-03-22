@@ -19,12 +19,15 @@ struct primitive
     unsigned id = PRIMITIVE_ID++;
     pType type;
     primitive(pType t) : type(t), refCount(0) {}
-    ~primitive() {}
+    virtual ~primitive() {}
 
     // material getter setter
     const material& getMaterial() { return material_m; }
     void setMaterial(const material& mtrl) { material_m = mtrl; }
     void setMaterial(material&& mtrl) { material_m = std::move(mtrl); }
+
+    // get surface normal
+    virtual tuple normalAt(const tuple& point)=0;
 
     // getter for transform matrix
     inline const glm::mat4& getTransform()
@@ -62,9 +65,10 @@ struct sphere : public primitive
     
     sphere(const tuple& ori = pointFactory(0, 0, 0), const float& radi = 1) : 
         primitive(pType::SPHERE), origin(ori), radius(radi) {}
+    ~sphere() {}
 
     // get surface normal
-    tuple normalAt(const tuple& point);
+    tuple normalAt(const tuple& point) override;
 };
 
 }// namespace renderer

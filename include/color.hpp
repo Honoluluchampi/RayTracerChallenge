@@ -8,6 +8,7 @@ struct color
 {
     float red, green, blue;
     color(const float& r, const float& g, const float& b) : red(r), green(g), blue(b) {}
+    inline const color& censore() {red=std::min(red,1.0f); green=std::min(green,1.0f); blue=std::min(blue,1.0f); return *this;}
 };
 
 color operator+ (const color& lhs, const color& rhs);
