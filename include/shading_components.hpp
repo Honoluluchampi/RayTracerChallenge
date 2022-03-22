@@ -1,6 +1,7 @@
 #pragma once
 
 #include <color.hpp>
+#include <tuple.hpp>
 
 namespace renderer{
 
@@ -28,4 +29,6 @@ struct material
 inline bool operator== (const material& lhs, const material& rhs) 
 { return (lhs.color_m==rhs.color_m) && (lhs.ambient_m==rhs.ambient_m) && (lhs.diffuse_m==rhs.diffuse_m) && 
     (lhs.specular_m==rhs.specular_m) && (lhs.shininess_m==rhs.shininess_m); }
-}
+
+color lighting(const material& mtrl, const pointLight& light, const tuple& point, const tuple& eyev, const tuple& normalv);
+} // namespace renderer

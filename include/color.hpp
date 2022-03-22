@@ -1,24 +1,24 @@
 #pragma once
 #include <utils.hpp>
 
-// only support double for now
+// only support float for now
 
 namespace renderer{
 struct color
 {
-    double red, green, blue;
-    color(const double& r, const double& g, const double& b) : red(r), green(g), blue(b) {}
+    float red, green, blue;
+    color(const float& r, const float& g, const float& b) : red(r), green(g), blue(b) {}
 };
 
 color operator+ (const color& lhs, const color& rhs);
 color operator- (const color& lhs, const color& rhs);
-color operator* (const color& clr, const double& dbl);
-color operator* (const double& dbl, const color& clr);
+color operator* (const color& clr, const float& dbl);
+color operator* (const float& dbl, const color& clr);
 color operator* (const color& lhs, const color& rhs);
 
 color& operator+= (color& lhs, const color& rhs);
 color& operator-= (color& lhs, const color& rhs);
-color& operator*= (color& clr, const double& dbl);
+color& operator*= (color& clr, const float& dbl);
 color& operator*= (color& lhs, const color& rhs);
 
 // for comparision
