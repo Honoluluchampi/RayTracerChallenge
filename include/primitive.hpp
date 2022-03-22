@@ -2,6 +2,7 @@
 
 #include <tuple.hpp>
 #include <ray.hpp>
+#include <shading_components.hpp>
 #include <functional>
 #include <glm_inc.hpp>
 
@@ -20,6 +21,11 @@ struct primitive
     primitive(pType t) : type(t), refCount(0) {}
     ~primitive() {}
 
+    // material getter setter
+    const material& getMaterial() { return material_m; }
+    void setMaterial(const material& mtrl) { material_m = mtrl; }
+    void setMaterial(material&& mtrl) { material_m = std::move(mtrl); }
+
     // getter for transform matrix
     inline const glm::mat4& getTransform()
     { return transform; }
@@ -33,6 +39,8 @@ private:
     glm::mat4 transform = glm::mat4(1);
     // inverse transform 
     glm::mat4 inverseTrfm = glm::mat4(1);
+
+    material material_m;
     // inverse trfm mat caching
     bool inverseCached = true;
 

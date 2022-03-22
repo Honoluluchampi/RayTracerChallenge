@@ -1,4 +1,4 @@
-UNIT_NAME	=normal_reflection
+UNIT_NAME	=shading_components
 LIB_NAME	=renderer
 PIT_NAME	=chap5
 

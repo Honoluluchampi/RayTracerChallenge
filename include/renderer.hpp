@@ -13,3 +13,4 @@
 #include <transformation.hpp>
 #include <ray.hpp>
 #include <primitive.hpp>
+#include <shading_components.hpp>
